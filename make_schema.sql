@@ -36,7 +36,18 @@ CREATE TABLE Records.Transactions (
     transaction_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     sender_account_id UUID NOT NULL REFERENCES Records.Accounts(account_id),
     receiver_account_id UUID NOT NULL REFERENCES Records.Accounts(account_id),
-    amount DEC(19, 4) NOT NULL,
+    base_amount DEC(19, 4) NOT NULL,
+    source_currency CHAR(3) NOT NULL,
+    target_currency CHAR(3) NOT NULL,
+    exchange_rate DEC(19, 9) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT positive_amount CHECK (amount > 0)
+    CONSTRAINT positive_amount CHECK (base_amount > 0)
 );
+
+CREATE TABLE Records.ExchangeRates (
+    source_currency CHAR(3) NOT NULL,
+    target_currency CHAR(3) NOT NULL,
+    exchange_rate DEC(19, 9) NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (source_currency, target_currency)
+)

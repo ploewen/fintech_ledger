@@ -119,6 +119,22 @@ def create_user_record(cursor, i):
     )
 
 
+def create_exchange_rates(cursor):
+    cursor.execute(
+        """
+        INSERT INTO Records.ExchangeRates (source_currency, target_currency, exchange_rate)
+        VALUES 
+            ('CAD', 'USD', 0.7308),
+            ('USD', 'CAD', 1.3683),
+            ('CAD', 'EUR', 0.6352),
+            ('EUR', 'CAD', 1.5743),
+            ('USD', 'EUR', 0.8691),
+            ('EUR', 'USD', 1.1507)
+        ON CONFLICT (source_currency, target_currency) DO NOTHING;
+        """
+    )
+
+
 def seed_db():
     """
     Connects to the database and populates user and account tables.
@@ -138,6 +154,8 @@ def seed_db():
 
         for i in range(NUM_USERS):
             create_user_record(cursor, i)
+
+        create_exchange_rates(cursor)
 
         connection.commit()
         print(f"Successfully seeded {NUM_USERS} users and accounts.")
