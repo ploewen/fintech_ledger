@@ -1,14 +1,13 @@
+import json
 import requests
-from sqlalchemy import text
+
+from decimal import Decimal
+from sqlalchemy import create_engine, text
 
 
-def update_exchange_rates(engine, base_currency="USD"):
-    url = f"https://api.frankfurter.app/latest?from={base_currency}"
-    response = requests.get(url).json()
+def update_all_exchange_rates(engine):
+    supported_currencies = ["USD", "EUR", "CAD"]
 
-    rates = response.get("rates", {})
-
-    # Prepare the UPSERT query
     query = text("""
         INSERT INTO Records.ExchangeRates (source_currency, target_currency, exchange_rate, last_updated)
         VALUES (:source, :target, :rate, CURRENT_TIMESTAMP)
@@ -19,8 +18,19 @@ def update_exchange_rates(engine, base_currency="USD"):
     """)
 
     with engine.begin() as conn:
-        for target, rate in rates.items():
-            conn.execute(
-                query, {"source": base_currency, "target": target, "rate": rate}
-            )
-    print(f"Successfully updated {len(rates)} currency pairs.")
+        for base in supported_currencies:
+            url = f"https://api.frankfurter.app/latest?from={base}"
+            response = json.loads(requests.get(url).text, parse_float=Decimal)
+            rates = response.get("rates", {})
+
+            for target, rate in rates.items():
+                if target in supported_currencies:
+                    conn.execute(
+                        query, {"source": base, "target": target, "rate": rate}
+                    )
+            print(f"Updated rates with {base} as base currency.")
+
+
+if __name__ == "__main__":
+    engine = create_engine("postgresql+psycopg2://philiploewen:@localhost:5432/Fintech")
+    update_all_exchange_rates(engine)
