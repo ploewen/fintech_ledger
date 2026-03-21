@@ -43,14 +43,10 @@ A comprehensive analysis of the fintech platform's financial database has been c
 ## Repository Structure
 
 ```
-fintech/
-├── .python-version                     
-├── pyproject.toml                     # Project configuration
-├── uv.lock                            # uv dependency file
-├── README.md                          # This file
+fintech/                           
 ├── analysis/ 
 │   └── db_analysis.ipynb              # Comprehensive financial analysis report
-└── databse/
+└── database/
     ├── make_schema.sql                # Database schema definition
     ├── make_transactions.py           # Transaction generation script
     ├── populate_db.py                 # Database population pipeline
