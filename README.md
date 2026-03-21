@@ -44,7 +44,9 @@ A comprehensive analysis of the fintech platform's financial database has been c
 
 ```
 fintech/
+├── .python-version                     
 ├── pyproject.toml                     # Project configuration
+├── uv.lock                            # uv dependency file
 ├── README.md                          # This file
 ├── analysis/ 
 │   └── db_analysis.ipynb              # Comprehensive financial analysis report
