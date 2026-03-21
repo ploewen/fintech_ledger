@@ -43,7 +43,7 @@ A comprehensive analysis of the fintech platform's financial database has been c
 ## Repository Structure
 
 ```
-fintech/                           
+fintech_ledger/                           
 ├── analysis/ 
 │   └── db_analysis.ipynb              # Comprehensive financial analysis report
 └── database/
