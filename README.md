@@ -13,7 +13,7 @@ This project demonstrates the implementation of a relational database schema in 
 ## Tech Stack
 - Database: PostgreSQL
 - Language: Python3.13
-- Libraries: psycopg2-binary (Postgres driver), random (Statistical modelling)
+- Libraries: psycopg2-binary (Postgres driver), random (lognormal variate sampling for realistic wealth distribution simulation)
 - GUI: DBeaver
 
 ## Database Analysis
@@ -31,7 +31,7 @@ A comprehensive analysis of the fintech platform's financial database has been c
    - Network hub identification based on unique recipient reach
    - Cross-border transaction leaders
 
-4. **Exchange Rate Integrity Assessment** - Evaluates the platform's multi-currency capabilities by identifying triangular arbitrage opportunities, revealing that current exchange rate precision (5 decimal places) permits modest but material inefficiencies (~0.01-0.02% variation per dollar).
+4. **Exchange Rate Integrity Assessment** - Evaluates the platform's multi-currency capabilities by identifying triangular arbitrage opportunities, revealing that current exchange rate precision (5 decimal places) permits modest but material inefficiencies (+0.000174% to -0.000649% variation per dollar).
 
 ### Key Findings
 
